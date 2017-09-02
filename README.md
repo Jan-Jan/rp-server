@@ -5,6 +5,20 @@ This library was inspired by
 and
 [Node server with Rx and Cycle.js](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/).
 
+<<<<<<< HEAD
+=======
+
+## Installation
+
+```
+npm install --save rxjs-server
+```
+
+## Getting started
+
+Creating your first server is as easy as
+
+>>>>>>> dev
 ```
 const rxjsServer = require('rxjs-server')
 const {
