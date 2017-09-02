@@ -16,11 +16,7 @@ const {
 const helloWordRoute = require('./helloWorldRoute')
 const otherRoutes = require('./otherRoutes')
 
-<<<<<<< HEAD
-const middleware = ({ http$ }) => ({
-=======
 const middleware = ({ http$ /*, ws$ */ }) => ({
->>>>>>> dev
   http$: http$
     .do(({ req: { method, url } }) => console.log(`${method}:${url}`))
     // .map(tokenAuth(authSettings))
@@ -32,10 +28,7 @@ const middleware = ({ http$ /*, ws$ */ }) => ({
 
 const {
   httpServerCallback,
-<<<<<<< HEAD
-=======
   // wsServerCallback,
->>>>>>> dev
 } = createServerCallbacks(middleware)
 
 const hostname = '127.0.0.1'
