@@ -18,6 +18,7 @@ npm install --save rxjs-server
 
 Creating your first server is as easy as
 
+<<<<<<< HEAD
 >>>>>>> dev
 ```
 const rxjsServer = require('rxjs-server')
@@ -28,14 +29,27 @@ const {
     notFound,
   }
 } = rxjsServer
+=======
+```javascript
+const createServerCallbacks = require('rxjs-server').createServerCallbacks
+
+const routes = [
+  {
+    url: '/',
+    handler: () => 'Hello World',
+  }, {
+    url: '*',
+    handler: () => {
+      const err = new Error('route not found')
+      err.statusCode = 404
+      throw err
+    },
+  },
+]
+>>>>>>> dev
 
 const middleware = ({ http$ }) => ({
-  http$: http$
-    .handle(route({
-      url: '/',
-      handler: () => 'Hello World',
-    }))
-    .handle(notFound)
+  http$: http$.route(routes),
 })
 
 const { httpServerCallback } = createServerCallbacks(middleware)
@@ -47,4 +61,23 @@ http.createServer(httpServerCallback)
   .listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
   })
+```
+
+All the magic lies in the middleware.
+For a more complete system, it would look like this.
+
+```javascript
+const httpHandlers = require('rxjs-server').httpHandlers
+const { logger, tokenAuth, authRequired } = httpHandlers
+
+const authSettings = { /* all your secrets */ }
+
+const middleware = ({ http$ }) => ({
+  http$: http$
+    .do(logger())
+    .map(tokenAuth(authSettings))
+    .route(publicRoutes)
+    .map(authRequired)
+    .route(privateRoutes),
+})
 ```

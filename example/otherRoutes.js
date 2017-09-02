@@ -15,5 +15,12 @@ module.exports = [
   }, {
     url: 'promise',
     handler: data => Promise.resolve('mook'),
+  }, {
+    url: '*',
+    handler: req => {
+      const err = new Error('route not found')
+      err.statusCode = 404
+      throw err
+    },
   }
 ]
