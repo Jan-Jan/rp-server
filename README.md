@@ -1,7 +1,7 @@
 # rp-server
 
 This is a simple http server for node.
-It uses a functional approach to be as simple as possible,
+It uses a functional/reactive approach to be as simple as possible,
 while including basic security best practices.
 
 This library was inspired by
