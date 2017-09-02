@@ -42,14 +42,14 @@ const middleware = ({ http$ /*, wss$ */ }) => ({
 })
 
 const {
-  httpEffect,
+  httpServerCallback,
   // wssServerCallback,
 } = createServerCallbacks(middleware)
 
 const hostname = '127.0.0.1'
 const port = 1337
 
-http.createServer(httpEffect.serverCallback.bind(httpEffect))
+http.createServer(httpServerCallback)
   .listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
   });
