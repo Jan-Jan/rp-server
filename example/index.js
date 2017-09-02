@@ -27,8 +27,8 @@ const middleware = ({ http$ /*, wss$ */ }) => ({
     .handle(({ url }) => console.log('url =', url))
     // .handle(req => 'WOOT')
     .handle(req => {
-      const err = new Error('this is a problem')
-      err.statusCode = 666
+      const err = new Error('route not found')
+      err.statusCode = 404
       throw err
     })
 /*
