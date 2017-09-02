@@ -16,21 +16,17 @@ const {
 require('rxjs/add/operator/do')
 
 const helloWordRoute = require('./helloWorldRoute')
-// const otherRoutes = require('./otherRoutes')
+const otherRoutes = require('./otherRoutes')
 
 const middleware = ({ http$ /*, wss$ */ }) => ({
   http$: http$
-    .handle(({ url }) => console.log('url =', url))
-    .handle(({ method }) => console.log('method =', method))
-    .handle(route(helloWordRoute))
-    .handle(notFound)
-/*
+    .handle(({ method, url }) => console.log(`${method}:${url}`))
     // .handle(tokenAuth(authSettings))
+    .handle(route(helloWordRoute))
     .handle(route(otherRoutes))
     // .handle(authRequired)
     // .handle(route(privateRoutes))
-    .handle(notFound),
-*/
+    .handle(notFound)
 })
 
 const {
