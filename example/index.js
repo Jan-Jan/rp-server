@@ -24,8 +24,11 @@ const otherRoutes = require('./otherRoutes')
 
 const middleware = ({ http$ /*, wss$ */ }) => ({
   http$: http$
-    .handle(x => x)
-    .do(e => console.log('request to', e.req.url)),
+    .handle(({ url }) => console.log('url =', url))
+    // .handle(req => 'WOOT')
+    .handle(req => {
+      throw new Error('this is a problem')
+    })
 /*
     // .handle(tokenAuth(authSettings))
     .handle(route(helloWordRoute))
