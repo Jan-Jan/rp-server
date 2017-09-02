@@ -114,15 +114,7 @@ const middleware = ({ http$ }) => ({
 const { httpServerCallback } = createServerCallbacks(middleware)
 ```
 
-<<<<<<< HEAD
-
-## Middleware
-
-All the magic lies in the middleware.
-For a more complete system, it would look like this.
-=======
 For a more complete system, it would look like this:
->>>>>>> dev
 
 ```javascript
 const httpHandlers = require('rp-server').httpHandlers
@@ -147,25 +139,10 @@ It already has the operators `map` and `do` added.
 
 We defined the `route` operator.
 It takes an array of route definitions, or just a single one.
-<<<<<<< HEAD
-A route definition is of the shape:
-
-```javascript
-{
-  url: string,
-  handler: function,
-}
-```
-
-### Route handler
-
-A route handler is supposed to be a pure function.
-=======
 
 ### Route handler
 
 A route handler is supposed to be a simple function, e.g., see examples above.
->>>>>>> dev
 It gets passed the `req` variable.
 It can return a null, undefined, string, a promise, or an object of the shape
 
