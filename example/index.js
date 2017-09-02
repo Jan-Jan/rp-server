@@ -19,10 +19,10 @@ const otherRoutes = require('./otherRoutes')
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
     .do(logger)
-    // .map(tokenAuth(authSettings))
+    // .do(tokenAuth(authSettings))
     .route(helloWordRoute)
     .route(otherRoutes)
-    // .map(authRequired)
+    // .do(authRequired)
     // .route(privateRoutes)
 })
 
