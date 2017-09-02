@@ -94,7 +94,6 @@ A route definition is of the shape:
 
 A route handler is supposed to be a pure function.
 It gets passed the `req` variable.
-
 It can return a null, undefined, string, a promise, or an object of the shape
 
 ```
