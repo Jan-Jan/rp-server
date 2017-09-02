@@ -16,14 +16,14 @@ const {
 const helloWordRoute = require('./helloWorldRoute')
 const otherRoutes = require('./otherRoutes')
 
-const middleware = ({ http$ /*, wss$ */ }) => ({
+const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
-    // .map(({ req: { method, url } }) => console.log(`${method}:${url}`))
+    .do(({ req: { method, url } }) => console.log(`${method}:${url}`))
     // .map(tokenAuth(authSettings))
     .route(helloWordRoute)
     .route(otherRoutes)
     // .map(authRequired)
-    // .map(route(privateRoutes))
+    // .route(privateRoutes)
 })
 
 const {

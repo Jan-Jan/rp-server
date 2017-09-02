@@ -52,16 +52,17 @@ All the magic lies in the middleware.
 For a more complete system, it would look like this.
 
 ```javascript
-const bunyan = require('bunyan')
 const httpHandlers = require('rxjs-server').httpHandlers
 const { logger, tokenAuth, authRequired } = httpHandlers
 
+const authSettings = { /* all your secrets */ }
+
 const middleware = ({ http$ }) => ({
   http$: http$
-    .do(logger(bunyan))
-    .do(tokenAuth(authSettings))
+    .do(logger())
+    .map(tokenAuth(authSettings))
     .route(publicRoutes)
-    .do(authRequired)
+    .map(authRequired)
     .route(privateRoutes),
 })
 ```
