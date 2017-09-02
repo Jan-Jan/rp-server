@@ -8,13 +8,13 @@ module.exports = [
     })
   }, {
     url: '/name/:name',
-    method: 'POST',
     handler: req => ({
-      body: `Hello ${req.params.name}`,
+      msg: `Hello ${req.params.name}`,
     })
   }, {
-    url: 'promise',
-    handler: data => Promise.resolve('mook'),
+    url: 'user',
+    method: 'POST',
+    handler: data => Promise.resolve({ statusCode: 201, body: 'user created' }),
   }, {
     url: '*',
     handler: req => {

@@ -1,15 +1,50 @@
-# RxJS Server
+# rp-server
+
+This is a simple http server for node.
+It uses a functional approach to be as simple as possible,
+while including basic security best practices.
 
 This library was inspired by
 [Building REST APIs with Observables](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/)
 and
 [Node server with Rx and Cycle.js](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/).
 
+## Background
+
+I wrote this server, because I wanted to be able to define a route using simple functions or promises.
+E.g., 
+
+```javascript
+{
+  url: '/',
+  handler: () => 'Hello World',
+}
+```
+
+or
+
+```javascript
+{
+  url: '/name/:name',
+  handler: req => `Hello ${req.params.name}`,
+}
+```
+
+or
+
+```javascript
+{
+  url: '/user',
+  method: 'POST',
+  handler: req => Promise.resolve({ statusCode: 201, body: 'user created' }),
+}
+```
+
 
 ## Installation
 
 ```
-npm install --save rxjs-server
+npm install --save rp-server
 ```
 
 ## Getting started
@@ -48,6 +83,9 @@ http.createServer(httpServerCallback)
   })
 ```
 
+
+## Middleware
+
 All the magic lies in the middleware.
 For a more complete system, it would look like this.
 
@@ -59,10 +97,55 @@ const authSettings = { /* all your secrets */ }
 
 const middleware = ({ http$ }) => ({
   http$: http$
-    .do(logger())
-    .map(tokenAuth(authSettings))
+    .do(logger)
+    .do(tokenAuth(authSettings))
     .route(publicRoutes)
-    .map(authRequired)
+    .do(authRequired)
     .route(privateRoutes),
 })
 ```
+
+**NOTE: `tokenAuth` and `authRequired` have not been written yet.**
+
+The `http$` is a RxJS Subject stream.
+It already has the operators `map` and `do` added.
+
+We defined the `route` operator.
+It takes an array of route definitions, or just a single one.
+A route definition is of the shape:
+
+```javascript
+{
+  url: string,
+  handler: function,
+}
+```
+
+### Route handler
+
+A route handler is supposed to be a pure function.
+It gets passed the `req` variable.
+It can return a null, undefined, string, a promise, or an object of the shape
+
+```
+{
+  statusCode: number || undefined,
+  body: string || promise || object,
+}
+```
+
+If you return a null or undefined, then req will continue to be checked against later routes.
+Whereas, if you respond with anything else, the request will not be checked against any further routes.
+
+Examples can be found [here](example/otherRoutes.js)
+
+*Later we will add the ability to handle streams too.*
+
+## TODO (pull requests welcome)
+
+* [ ] npm run *
+* [ ] streams support
+* [ ] httpHandlers: tokenAuth && authRequired
+* [ ] tests
+* [ ] websocket support
+* [ ] typescript
