@@ -27,7 +27,9 @@ const middleware = ({ http$ /*, wss$ */ }) => ({
     .handle(({ url }) => console.log('url =', url))
     // .handle(req => 'WOOT')
     .handle(req => {
-      throw new Error('this is a problem')
+      const err = new Error('this is a problem')
+      err.statusCode = 666
+      throw err
     })
 /*
     // .handle(tokenAuth(authSettings))
