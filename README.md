@@ -12,7 +12,7 @@ and
 ## Background
 
 I wrote this server, because I wanted to be able to define a route using simple functions or promises.
-E.g., 
+E.g.,
 
 ```javascript
 {
@@ -40,6 +40,17 @@ or
 }
 ```
 
+or
+
+```javascript
+{
+  url: '/arb',
+  handler: async function arb(req) {
+    return await Promise.resolve('async/await magic'),
+  },
+}
+```
+
 
 ## Installation
 
@@ -52,8 +63,31 @@ npm install --save rp-server
 Creating your first server is as easy as
 
 ```javascript
-const createServerCallbacks = require('rxjs-server').createServerCallbacks
+const createServerCallbacks = require('rp-server').createServerCallbacks
 
+const { httpServerCallback } = createServerCallbacks()
+
+const hostname = '127.0.0.1'
+const port = 1337
+
+http.createServer(httpServerCallback)
+  .listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`)
+  })
+```
+
+Because we don't have any routes setup, a `curl http://127.0.0.1:1337/` will respond with
+
+```json
+{"error":"url not found"}
+```
+
+## Middleware
+
+All the magic lies in the middleware.
+To add some simple routing we can
+
+```javascript
 const routes = [
   {
     url: '/',
@@ -73,21 +107,9 @@ const middleware = ({ http$ }) => ({
 })
 
 const { httpServerCallback } = createServerCallbacks(middleware)
-
-const hostname = '127.0.0.1'
-const port = 1337
-
-http.createServer(httpServerCallback)
-  .listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`)
-  })
 ```
 
-
-## Middleware
-
-All the magic lies in the middleware.
-For a more complete system, it would look like this.
+For a more complete system, it would look like this:
 
 ```javascript
 const httpHandlers = require('rxjs-server').httpHandlers
@@ -112,18 +134,10 @@ It already has the operators `map` and `do` added.
 
 We defined the `route` operator.
 It takes an array of route definitions, or just a single one.
-A route definition is of the shape:
-
-```javascript
-{
-  url: string,
-  handler: function,
-}
-```
 
 ### Route handler
 
-A route handler is supposed to be a pure function.
+A route handler is supposed to be a pure function, e.g., see examples above.
 It gets passed the `req` variable.
 It can return a null, undefined, string, a promise, or an object of the shape
 
