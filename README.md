@@ -113,6 +113,7 @@ Examples can be found [here](example/otherRoutes.js)
 
 ## Future
 
+* [ ] npm run *
 * [ ] streams support
 * [ ] httpHandlers: tokenAuth && authRequired
 * [ ] tests
