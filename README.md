@@ -112,7 +112,7 @@ const { httpServerCallback } = createServerCallbacks(middleware)
 For a more complete system, it would look like this:
 
 ```javascript
-const httpHandlers = require('rxjs-server').httpHandlers
+const httpHandlers = require('rp-server').httpHandlers
 const { logger, tokenAuth, authRequired } = httpHandlers
 
 const authSettings = { /* all your secrets */ }
@@ -137,7 +137,7 @@ It takes an array of route definitions, or just a single one.
 
 ### Route handler
 
-A route handler is supposed to be a pure function, e.g., see examples above.
+A route handler is supposed to be a simple function, e.g., see examples above.
 It gets passed the `req` variable.
 It can return a null, undefined, string, a promise, or an object of the shape
 
