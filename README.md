@@ -111,7 +111,7 @@ Examples can be found [here](example/otherRoutes.js)
 
 *Later we will add the ability to handle streams too.*
 
-## Future
+## TODO (pull requests welcome)
 
 * [ ] npm run *
 * [ ] streams support
