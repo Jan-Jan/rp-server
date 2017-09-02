@@ -13,7 +13,6 @@ const {
     // authRequired,
   }
 } = rxjsServer
-require('rxjs/add/operator/do')
 
 const helloWordRoute = require('./helloWorldRoute')
 const otherRoutes = require('./otherRoutes')

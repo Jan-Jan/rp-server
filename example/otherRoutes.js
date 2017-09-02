@@ -2,16 +2,15 @@ module.exports = [
   {
     url: '/',
     method: 'POST',
-    handler: data => ({
+    handler: req => ({
       statusCode: 201,
       body: 'it was made so',
     })
   }, {
     url: '/name/:name',
     method: 'POST',
-    handler: data => ({
-      statusCode: 201,
-      body: 'it was made so',
+    handler: req => ({
+      body: `Hello ${req.params.name}`,
     })
 /*
   }, {
