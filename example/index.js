@@ -16,12 +16,15 @@ const {
 */
 } = rxjsServer
 require('rxjs/add/operator/do')
+
 /*
 const helloWordRoute = require('./helloWordRoute')
 const otherRoutes = require('./otherRoutes')
 */
+
 const middleware = ({ http$ /*, wss$ */ }) => ({
   http$: http$
+    .handle(x => x)
     .do(e => console.log('request to', e.req.url)),
 /*
     // .handle(tokenAuth(authSettings))
