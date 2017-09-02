@@ -1,12 +1,14 @@
 # RxJS Server
 
+This is a simple RxJS based server for node.
+It uses a functional approach to be as simple as possible,
+while including basic security best practices.
+
 This library was inspired by
 [Building REST APIs with Observables](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/)
 and
 [Node server with Rx and Cycle.js](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/).
 
-<<<<<<< HEAD
-=======
 
 ## Installation
 
@@ -18,18 +20,6 @@ npm install --save rxjs-server
 
 Creating your first server is as easy as
 
-<<<<<<< HEAD
->>>>>>> dev
-```
-const rxjsServer = require('rxjs-server')
-const {
-  createServerCallbacks,
-  route,
-  httpHandlers: {
-    notFound,
-  }
-} = rxjsServer
-=======
 ```javascript
 const createServerCallbacks = require('rxjs-server').createServerCallbacks
 
@@ -46,7 +36,6 @@ const routes = [
     },
   },
 ]
->>>>>>> dev
 
 const middleware = ({ http$ }) => ({
   http$: http$.route(routes),
@@ -81,3 +70,9 @@ const middleware = ({ http$ }) => ({
     .route(privateRoutes),
 })
 ```
+
+## Future
+
+* [ ] test coverate
+* [ ] streams support
+* [ ] websocket support
