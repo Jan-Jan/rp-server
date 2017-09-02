@@ -4,14 +4,13 @@ const http = require('http')
 const rxjsServer = require('../lib')
 const {
   createServerCallbacks,
-  route,
+  /*
   httpHandlers: {
-    notFound,
     // tokenAuth,
     // cookieAuth,
     // oauth2Auth,
     // authRequired,
-  }
+  },*/
 } = rxjsServer
 
 const helloWordRoute = require('./helloWorldRoute')
@@ -19,18 +18,17 @@ const otherRoutes = require('./otherRoutes')
 
 const middleware = ({ http$ /*, wss$ */ }) => ({
   http$: http$
-    .handle(({ method, url }) => console.log(`${method}:${url}`))
-    // .handle(tokenAuth(authSettings))
-    .handle(route(helloWordRoute))
-    .handle(route(otherRoutes))
-    // .handle(authRequired)
-    // .handle(route(privateRoutes))
-    .handle(notFound)
+    // .map(({ req: { method, url } }) => console.log(`${method}:${url}`))
+    // .map(tokenAuth(authSettings))
+    .route(helloWordRoute)
+    .route(otherRoutes)
+    // .map(authRequired)
+    // .map(route(privateRoutes))
 })
 
 const {
   httpServerCallback,
-  // wssServerCallback,
+  // wsServerCallback,
 } = createServerCallbacks(middleware)
 
 const hostname = '127.0.0.1'
