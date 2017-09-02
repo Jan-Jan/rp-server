@@ -1,4 +1,4 @@
-modules.exports = {
+module.exports = {
   url: '/',
   handler: () => 'Hello World',
 }

@@ -4,7 +4,6 @@ const http = require('http')
 const rxjsServer = require('../lib')
 const {
   createServerCallbacks,
-/*
   route,
   httpHandlers: {
     notFound,
@@ -13,27 +12,20 @@ const {
     // oauth2Auth,
     // authRequired,
   }
-*/
 } = rxjsServer
 require('rxjs/add/operator/do')
 
-/*
-const helloWordRoute = require('./helloWordRoute')
-const otherRoutes = require('./otherRoutes')
-*/
+const helloWordRoute = require('./helloWorldRoute')
+// const otherRoutes = require('./otherRoutes')
 
 const middleware = ({ http$ /*, wss$ */ }) => ({
   http$: http$
     .handle(({ url }) => console.log('url =', url))
-    // .handle(req => 'WOOT')
-    .handle(req => {
-      const err = new Error('route not found')
-      err.statusCode = 404
-      throw err
-    })
+    .handle(({ method }) => console.log('method =', method))
+    .handle(route(helloWordRoute))
+    .handle(notFound)
 /*
     // .handle(tokenAuth(authSettings))
-    .handle(route(helloWordRoute))
     .handle(route(otherRoutes))
     // .handle(authRequired)
     // .handle(route(privateRoutes))
