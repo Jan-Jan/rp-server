@@ -4,13 +4,13 @@ const http = require('http')
 const rxjsServer = require('../lib')
 const {
   createServerCallbacks,
-  /*
   httpHandlers: {
+    logger,
     // tokenAuth,
     // cookieAuth,
     // oauth2Auth,
     // authRequired,
-  },*/
+  },
 } = rxjsServer
 
 const helloWordRoute = require('./helloWorldRoute')
@@ -18,7 +18,7 @@ const otherRoutes = require('./otherRoutes')
 
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
-    .do(({ req: { method, url } }) => console.log(`${method}:${url}`))
+    .do(logger)
     // .map(tokenAuth(authSettings))
     .route(helloWordRoute)
     .route(otherRoutes)

@@ -71,8 +71,11 @@ const middleware = ({ http$ }) => ({
 })
 ```
 
+**NOTE: `tokenAuth` and `authRequired` have not been written yet.**
+
 ## Future
 
-* [ ] test coverate
 * [ ] streams support
+* [ ] httpHandlers: tokenAuth && authRequired
+* [ ] tests
 * [ ] websocket support
