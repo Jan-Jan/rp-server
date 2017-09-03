@@ -56,6 +56,14 @@ or
 }
 ```
 
+or
+
+```javascript
+{
+  url: 'stream',
+  handler: data => fs.createReadStream(__dirname + '/index.js'),  
+}
+```
 
 ## Installation
 

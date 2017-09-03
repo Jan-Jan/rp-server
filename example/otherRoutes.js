@@ -21,7 +21,6 @@ module.exports = [
   }, {
     url: 'stream',
     handler: data => fs.createReadStream(__dirname + '/index.js'),
-    // handler: data => http.request('http://thecatapi.com/api/images/get?format=src&type=gif'),
   }, {
     url: '*',
     handler: req => {
