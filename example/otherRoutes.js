@@ -1,3 +1,6 @@
+const http = require('http')
+const fs = require('fs')
+
 module.exports = [
   {
     url: '/',
@@ -15,6 +18,10 @@ module.exports = [
     url: 'user',
     method: 'POST',
     handler: data => Promise.resolve({ statusCode: 201, body: 'user created' }),
+  }, {
+    url: 'stream',
+    handler: data => fs.createReadStream(__dirname + '/index.js'),
+    // handler: data => http.request('http://thecatapi.com/api/images/get?format=src&type=gif'),
   }, {
     url: '*',
     handler: req => {
