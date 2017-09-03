@@ -157,6 +157,7 @@ Examples can be found [here](example/otherRoutes.js)
 
 ## TODO (pull requests welcome)
 
+* [ ] lower case filenames
 * [ ] improve security
 * [ ] `npm run example`, etc *
 * [ ] httpHandlers: tokenAuth && authRequired
