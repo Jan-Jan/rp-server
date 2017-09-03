@@ -6,10 +6,6 @@ const {
   createServerCallbacks,
   httpHandlers: {
     logger,
-    // tokenAuth,
-    // cookieAuth,
-    // oauth2Auth,
-    // authRequired,
   },
 } = rxjsServer
 
@@ -19,11 +15,8 @@ const otherRoutes = require('./otherRoutes')
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
     .do(logger)
-    // .do(tokenAuth(authSettings))
     .route(helloWordRoute)
     .route(otherRoutes)
-    // .do(authRequired)
-    // .route(privateRoutes)
 })
 
 const {

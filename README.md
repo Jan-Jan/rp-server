@@ -1,13 +1,8 @@
 # rp-server
 
-This is a simple http server for node.
+This is a simple tiny http server for node.
 It uses a functional/reactive approach to be as simple as possible,
-while including basic security best practices.
-
-This is a simple RxJS 5 based server for node.
-**No knowledge of RxJS is needed**
-It uses a functional approach to be as simple as possible,
-while including basic security best practices.
+while targeting basic security best practices by default.
 
 This library was inspired by
 [Building REST APIs with Observables](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/)
@@ -162,6 +157,7 @@ Examples can be found [here](example/otherRoutes.js)
 
 ## TODO (pull requests welcome)
 
+* [ ] improve security
 * [ ] `npm run example`, etc *
 * [ ] httpHandlers: tokenAuth && authRequired
 * [ ] tests
