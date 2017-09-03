@@ -129,7 +129,7 @@ const middleware = ({ http$ }) => ({
     .do(logger)
     .do(tokenAuth(authSettings))
     .route(publicRoutes)
-    .do(authRequired)
+    .route(authRequired)
     .route(privateRoutes),
 })
 ```
