@@ -166,12 +166,9 @@ Whereas, if you respond with anything else, the request will not be checked agai
 
 Examples can be found [here](example/otherRoutes.js)
 
-*Later we will add the ability to handle streams too.*
-
 ## TODO (pull requests welcome)
 
-* [ ] npm run *
-* [ ] streams support
+* [ ] `npm run example`, etc *
 * [ ] httpHandlers: tokenAuth && authRequired
 * [ ] tests
 * [ ] websocket support
