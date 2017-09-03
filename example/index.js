@@ -9,8 +9,8 @@ const {
   },
 } = rxjsServer
 
-const helloWordRoute = require('./helloWorldRoute')
-const otherRoutes = require('./otherRoutes')
+const helloWordRoute = require('./hello-world-route')
+const otherRoutes = require('./other-routes')
 
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$

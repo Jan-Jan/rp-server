@@ -153,7 +153,7 @@ It can return a null, undefined, string, a promise, or an object of the shape
 If you return a null or undefined, then req will continue to be checked against later routes.
 Whereas, if you respond with anything else, the request will not be checked against any further routes.
 
-Examples can be found [here](example/otherRoutes.js)
+Examples can be found [here](example/other-routes.js)
 
 ## TODO (pull requests welcome)
 
