@@ -16,7 +16,7 @@ and
 
 ## Background
 
-I wrote this server, because I wanted to be able to define a route using simple functions or promises.
+I wrote this server, because I wanted to be able to define a route using simple functions, promises, or streams.
 E.g.,
 
 ```javascript
