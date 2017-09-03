@@ -21,15 +21,6 @@ E.g.,
 
 ```javascript
 {
-  url: '/',
-  handler: () => 'Hello World',
-}
-```
-
-or
-
-```javascript
-{
   url: '/name/:name',
   handler: req => `Hello ${req.params.name}`,
 }
