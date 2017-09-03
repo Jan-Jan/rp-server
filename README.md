@@ -56,6 +56,9 @@ or
 }
 ```
 
+In keeping with this clean style, I didn't want to create god objects.
+So I kept `req` and `res` unchanged, and allowed [streaming middleware](#middleware).
+
 ## Installation
 
 ```
