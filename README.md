@@ -123,13 +123,12 @@ const middleware = ({ http$ }) => ({
   http$: http$
     .do(logger)
     .do(tokenAuth(authSettings))
-    .route(publicRoutes)
-    .route(authRequired)
-    .route(privateRoutes),
+    .route(routes)
+    .route(moreRoutes),
 })
 ```
 
-**NOTE: `tokenAuth` and `authRequired` have not been written yet.**
+**NOTE: `tokenAuth` has not been written yet.**
 
 The `http$` is a RxJS Subject stream.
 It already has the operators `map` and `do` added.
@@ -157,10 +156,11 @@ Examples can be found [here](example/other-routes.js)
 
 ## TODO (pull requests welcome)
 
-* [ ] lower case filenames
+* [ ] serve static files
+* [ ] schema verification (optional)
+* [ ] httpHandlers: tokenAuth && route.role (optional)
 * [ ] improve security
 * [ ] `npm run example`, etc *
-* [ ] httpHandlers: tokenAuth && authRequired
 * [ ] tests
 * [ ] websocket support
 * [ ] typescript
