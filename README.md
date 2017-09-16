@@ -98,6 +98,11 @@ const routes = [
     handler: data => fs.createReadStream(__dirname + '/index.js'),  
   }
 ]
+
+const middleware = ({ http$ }) => ({
+  http$: http$
+    .route(routes)
+})
 ```
 
 A route handler is supposed to be a simple function, e.g., see examples above.
@@ -149,6 +154,16 @@ const middleware = ({ http$ }) => ({
 })
 ```
 
+or more simply
+
+```javascript
+const parse = require('rxserver').parse
+
+const middleware = ({ http$ }) => ({
+  http$: http$
+    .switchAssign(parse)
+})
+```
 
 ## TODO (pull requests welcome)
 
