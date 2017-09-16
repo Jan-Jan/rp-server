@@ -154,7 +154,7 @@ const middleware = ({ http$ }) => ({
 })
 ```
 
-or more simply
+or more simply (which also adds `query`)
 
 ```javascript
 const parse = require('rxserver').parse
@@ -168,6 +168,7 @@ const middleware = ({ http$ }) => ({
 ## TODO (pull requests welcome)
 
 * [ ] serve static files
+* [ ] server side rendering
 * [ ] schema verification (optional)
 * [ ] authentication middleware
 * [ ] `helmet` security functionality
