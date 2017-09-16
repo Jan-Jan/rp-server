@@ -4,9 +4,9 @@ This is a simple tiny http server for node.
 It uses a functional/reactive approach to be as simple as possible.
 
 This server has the absolute minimal unique API,
-so that it is [easy to use for beginners](#background) (no knowledge of rxjs required),
-(without needing to learn anything complex framework),
-while, advanced users can call on the full power of rxjs to adapt the system to their needs.
+so that it is easy to use for beginners
+(i.e, without needing to learn a complex framework).
+While, advanced users can call on the full power of rxjs to adapt the system to their needs.
 
 This also means that testing should be very easy,
 as the majority of your code should be simple functions that only include business logic.
