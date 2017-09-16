@@ -4,6 +4,14 @@ This is a simple tiny http server for node.
 It uses a functional/reactive approach to be as simple as possible,
 while targeting basic security best practices by default.
 
+This server has the absolute minimal unique API,
+so that it is [easy to use for beginners](#background) (no knowledge of rxjs required),
+(without needing to learn anything complex framework),
+while, advanced users can call on the full power of rxjs to adapt the system to their needs.
+
+This also means that testing should be very easy,
+as the majority of your code should be simple functions that only include business logic.
+
 This library was inspired by
 [Building REST APIs with Observables](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/)
 and
@@ -11,7 +19,7 @@ and
 
 ## Background
 
-I wrote this server, because I wanted to be able to define a route using simple functions, promises, or streams.
+A route can be defined using simple functions, promises, async/await, or streams.
 E.g.,
 
 ```javascript
@@ -51,7 +59,7 @@ or
 }
 ```
 
-In keeping with this clean style, I didn't want to create god objects.
+In keeping with this clean style, we didn't want to create god objects.
 So I kept `req` and `res` unchanged, and allowed [streaming middleware](#middleware).
 
 ## Installation
@@ -161,6 +169,8 @@ Examples can be found [here](example/other-routes.js)
 * [ ] httpHandlers: tokenAuth && route.role (optional)
 * [ ] improve security
 * [ ] `npm run example`, etc *
-* [ ] tests
+* [ ] tests: jest
+* [ ] circleci
 * [ ] websocket support
 * [ ] typescript
+* [ ] business rules example

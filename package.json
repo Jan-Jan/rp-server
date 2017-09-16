@@ -1,6 +1,6 @@
 {
   "name": "node-rxjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A node server using rxjs",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "rxjs": "^5.4.3"
+  },
+  "devDependencies": {
+    "body-parser": "^1.18.1",
+    "pino-http": "^2.6.2",
+    "query-string": "^5.0.0"
   }
 }

@@ -1,20 +1,31 @@
 'use strict'
 
 const http = require('http')
+const { URL } = require('url')
 const rxjsServer = require('../lib')
 const {
   createServerCallbacks,
-  httpHandlers: {
-    logger,
-  },
 } = rxjsServer
+const logger = require('pino-http')()
+const queryString = require('query-string')
 
 const helloWordRoute = require('./hello-world-route')
 const otherRoutes = require('./other-routes')
+const parser = require('body-parser').json()
 
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
-    .do(logger)
+    .do(({ req, res }) => logger(req, res))
+    .switchAssign(async function({ req, res }) {
+      const query = queryString.parse(queryString.extract(req.url))
+      const body = await new Promise((resolve, reject) => {
+        parser(req, res, (err) => {
+          if (err) reject(err)
+          return resolve(req.body)
+        })
+      })
+      return { query, body }
+    })
     .route(helloWordRoute)
     .route(otherRoutes)
 })
