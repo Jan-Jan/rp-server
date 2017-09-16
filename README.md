@@ -130,7 +130,7 @@ While, `rxserver` can be used that way using `do`, this is not a very functional
 Instead the suggested way is to use `switchAssign` that adds the object you return to the stream `http$`.
 
 E.g., `http$` starts with the object `{ req, res }`.
-`http$.switchAssign(() => ({ foo: 'bar' }))` will modify that object to `{ req, res, foo }`.
+`http$.switchAssign(() => ({ foo: 'bar' }))` will modify the stream object to `{ req, res, foo }`.
 
 You can use `switchAssign` to add parsing middleware, e.g:
 
@@ -169,11 +169,11 @@ const middleware = ({ http$ }) => ({
 
 * [ ] serve static files
 * [ ] schema verification (optional)
-* [ ] httpHandlers: tokenAuth && route.role (optional)
-* [ ] improve security
+* [ ] authentication middleware
+* [ ] `helmet` security functionality
 * [ ] `npm run example`, etc *
 * [ ] tests: jest
 * [ ] circleci
 * [ ] websocket support
-* [ ] typescript
+* [ ] typescript && tsickle in example
 * [ ] business rules example
