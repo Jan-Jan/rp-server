@@ -1,4 +1,4 @@
-# rp-server
+# rxserver
 
 This is a simple tiny http server for node.
 It uses a functional/reactive approach to be as simple as possible,
@@ -17,55 +17,11 @@ This library was inspired by
 and
 [Node server with Rx and Cycle.js](https://glebbahmutov.com/blog/node-server-with-rx-and-cycle/).
 
-## Background
-
-A route can be defined using simple functions, promises, async/await, or streams.
-E.g.,
-
-```javascript
-{
-  url: '/name/:name',
-  handler: req => `Hello ${req.params.name}`,
-}
-```
-
-or
-
-```javascript
-{
-  url: '/user',
-  method: 'POST',
-  handler: req => Promise.resolve({ statusCode: 201, body: 'user created' }),
-}
-```
-
-or
-
-```javascript
-{
-  url: '/arb',
-  handler: async function arb(req) {
-    return await Promise.resolve('async/await magic'),
-  },
-}
-```
-
-or
-
-```javascript
-{
-  url: 'stream',
-  handler: data => fs.createReadStream(__dirname + '/index.js'),  
-}
-```
-
-In keeping with this clean style, we didn't want to create god objects.
-So I kept `req` and `res` unchanged, and allowed [streaming middleware](#middleware).
 
 ## Installation
 
 ```
-npm install --save rp-server
+npm install --save rxserver
 ```
 
 ## Getting started
@@ -73,7 +29,7 @@ npm install --save rp-server
 Creating your first server is as easy as
 
 ```javascript
-const createServerCallbacks = require('rp-server').createServerCallbacks
+const createServerCallbacks = require('rxserver').createServerCallbacks
 
 const { httpServerCallback } = createServerCallbacks()
 
@@ -92,62 +48,60 @@ Because we don't have any routes setup, a `curl http://127.0.0.1:1337/` will res
 {"error":"url not found"}
 ```
 
-## Middleware
+## Adding middleware
 
 All the magic lies in the middleware.
-To add some simple routing we can
+
 
 ```javascript
-const routes = [
-  {
-    url: '/',
-    handler: () => 'Hello World',
-  }, {
-    url: '*',
-    handler: () => {
-      const err = new Error('route not found')
-      err.statusCode = 404
-      throw err
-    },
-  },
-]
-
 const middleware = ({ http$ }) => ({
-  http$: http$.route(routes),
+  http$: http$
+    .do(logger)
+    .switchAssign(parse)
+    .route(routes),
 })
 
 const { httpServerCallback } = createServerCallbacks(middleware)
 ```
 
-For a more complete system, it would look like this:
+The `http$` is a RxJS Subject stream, i.e., an observable.
+It already has the operators `map` and `do` attached.
+
+The `route` and `switchAssign` operators are unique to rxserver.
+
+### Operator: route
+
+A route can be defined using simple functions, promises, async/await, or streams.
+E.g.,
 
 ```javascript
-const httpHandlers = require('rp-server').httpHandlers
-const { logger, tokenAuth, authRequired } = httpHandlers
-
-const authSettings = { /* all your secrets */ }
-
-const middleware = ({ http$ }) => ({
-  http$: http$
-    .do(logger)
-    .do(tokenAuth(authSettings))
-    .route(routes)
-    .route(moreRoutes),
-})
+const routes = [
+  {
+    url: '/name/:name',
+    handler: ({ params }) => `Hello ${params.name}`,
+  },
+  {
+    url: '/user',
+    method: 'POST',
+    handler: ({ body }) => Promise.resolve({ statusCode: 201, body }),
+  },
+  {
+    url: '/search',
+    handler: async function({ query }) {
+      return await Promise.resolve({
+        statusCode: 200,
+        body: `async response: query = ${JSON.stringify(query)}`
+      })
+    },
+  },
+  {
+    url: 'stream',
+    handler: data => fs.createReadStream(__dirname + '/index.js'),  
+  }
+]
 ```
 
-**NOTE: `tokenAuth` has not been written yet.**
-
-The `http$` is a RxJS Subject stream.
-It already has the operators `map` and `do` added.
-
-We defined the `route` operator.
-It takes an array of route definitions, or just a single one.
-
-### Route handler
-
 A route handler is supposed to be a simple function, e.g., see examples above.
-It gets passed the `req` variable.
 It can return a null, undefined, string, a promise, or an object of the shape
 
 ```
@@ -161,6 +115,41 @@ If you return a null or undefined, then req will continue to be checked against 
 Whereas, if you respond with anything else, the request will not be checked against any further routes.
 
 Examples can be found [here](example/other-routes.js)
+
+## Operator: switchAssign
+
+You can think of the operator `switchAssign` as a combination of the
+standard operator `switchMap` with `Object.assign`.
+
+Most node.js servers, e.g., `express` or `hapi`, works by modifying the `req` object.
+While, `rxserver` can be used that way using `do`, this is not a very functional and clean style.
+Instead the suggested way is to use `switchAssign` that adds the object you return to the stream `http$`.
+
+E.g., `http$` starts with the object `{ req, res }`.
+`http$.switchAssign(() => ({ foo: 'bar' }))` will modify that object to `{ req, res, foo }`.
+
+You can use `switchAssign` to add parsing middleware, e.g:
+
+```javascript
+const queryString = require('query-string')
+const parser = require('body-parser').json()
+
+async function parse({ req, res }) {
+  const body = await new Promise((resolve, reject) => {
+    parser(req, res, (err) => {
+      if (err) reject(err)
+      return resolve(req.body)
+    })
+  })
+  return { body }
+}
+
+const middleware = ({ http$ }) => ({
+  http$: http$
+    .switchAssign(parse)
+})
+```
+
 
 ## TODO (pull requests welcome)
 

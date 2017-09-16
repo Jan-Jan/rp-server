@@ -22,10 +22,12 @@ module.exports = [
     url: 'stream',
     handler: data => fs.createReadStream(__dirname + '/index.js'),
   }, {
-    url: 'async',
-    handler: async function(obj) {
-      console.log('obj key =', Object.keys(obj))
-      return await Promise.resolve({ statusCode: 200, body: 'async response' })
+    url: 'search',
+    handler: async function({ query }) {
+      return await Promise.resolve({
+        statusCode: 200,
+        body: `async response: query = ${JSON.stringify(query)}`
+      })
     },
   }, {
     url: '*',
