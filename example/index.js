@@ -4,9 +4,7 @@ const http = require('http')
 const rxserver = require('../lib')
 const {
   createServerCallbacks,
-  httpHelpers: {
-    parse,
-  },
+  parse,
 } = rxserver
 
 const logger = require('./logger')
