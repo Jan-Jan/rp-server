@@ -1,8 +1,7 @@
 # rxserver
 
 This is a simple tiny http server for node.
-It uses a functional/reactive approach to be as simple as possible,
-while targeting basic security best practices by default.
+It uses a functional/reactive approach to be as simple as possible.
 
 This server has the absolute minimal unique API,
 so that it is [easy to use for beginners](#background) (no knowledge of rxjs required),

@@ -1,10 +1,15 @@
 'use strict'
 
 const http = require('http')
-const createServerCallbacks = require('../lib').createServerCallbacks
+const rxserver = require('../lib')
+const {
+  createServerCallbacks,
+  httpHelpers: {
+    parse,
+  },
+} = rxserver
 
 const logger = require('./logger')
-const parse = require('./parse')
 const helloWordRoute = require('./hello-world-route')
 const otherRoutes = require('./other-routes')
 
