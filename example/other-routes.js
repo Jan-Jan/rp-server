@@ -5,14 +5,14 @@ module.exports = [
   {
     url: '/',
     method: 'POST',
-    handler: ({ req }) => ({
+    handler: ({ body }) => ({
       statusCode: 201,
-      body: 'it was made so',
+      body,
     })
   }, {
     url: '/name/:name',
-    handler: ({ req }) => ({
-      msg: `Hello ${req.params.name}`,
+    handler: ({ params }) => ({
+      msg: `Hello ${params.name}`,
     })
   }, {
     url: 'user',
@@ -31,7 +31,7 @@ module.exports = [
     },
   }, {
     url: '*',
-    handler: ({ req }) => {
+    handler: () => {
       const err = new Error('route not found')
       err.statusCode = 404
       throw err
