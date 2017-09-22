@@ -14,7 +14,7 @@ const otherRoutes = require('./other-routes')
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
     .do(logger)
-    .switchMap(parse)
+    .catchMap(parse)
     .static(__dirname + '/public')
     .route(helloWordRoute)
     .route(otherRoutes)

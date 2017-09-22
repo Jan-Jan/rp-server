@@ -53,10 +53,13 @@ All the magic lies in the middleware.
 
 
 ```javascript
+const { parse, tryCatch } = rxserver
+
 const middleware = ({ http$ }) => ({
   http$: http$
     .do(logger)
-    .switchAssign(parse)
+    .catchMap(parse)
+    .static(__dirname + '/public')
     .route(routes),
 })
 
@@ -64,9 +67,16 @@ const { httpServerCallback } = createServerCallbacks(middleware)
 ```
 
 The `http$` is a RxJS Subject stream, i.e., an observable.
-It already has the operators `map` and `do` attached.
+It already has the operators `map`, `switchMap` and `do` attached.
 
-The `route` and `switchAssign` operators are unique to rxserver.
+The `parse` function asynchronously (hence the `switchMap` operator) converts `{ req, res }` into `{ url, method, body, res }`. It is wrapped in `tryCatch`
+
+The `switchCatch`, `route` and `static` operators are unique to rxserver.
+
+### Operator: switchCatch
+
+`catchMap` is the standard `switchMap(predicate)` changed to `switchMap(tryCatch(predicate))`.
+Where the `tryCatch` wraps your predicate function in a try/catch block, because streams do not handle thrown errors at all. I.e., `.catchMap(parse)` is exactly the same as `switchMap(tryCatch(parse))`.
 
 ### Operator: route
 
@@ -120,54 +130,20 @@ Whereas, if you respond with anything else, the request will not be checked agai
 
 Examples can be found [here](example/other-routes.js)
 
-## Operator: switchAssign
+## Operator: static [BETA]
 
-You can think of the operator `switchAssign` as a combination of the
-standard operator `switchMap` with `Object.assign`.
-
-Most node.js servers, e.g., `express` or `hapi`, works by modifying the `req` object.
-While, `rxserver` can be used that way using `do`, this is not a very functional and clean style.
-Instead the suggested way is to use `switchAssign` that adds the object you return to the stream `http$`.
-
-E.g., `http$` starts with the object `{ req, res }`.
-`http$.switchAssign(() => ({ foo: 'bar' }))` will modify the stream object to `{ req, res, foo }`.
-
-You can use `switchAssign` to add parsing middleware, e.g:
+Static servers the files from the directory passed to it:
 
 ```javascript
-const queryString = require('query-string')
-const parser = require('body-parser').json()
-
-async function parse({ req, res }) {
-  const body = await new Promise((resolve, reject) => {
-    parser(req, res, (err) => {
-      if (err) reject(err)
-      return resolve(req.body)
-    })
-  })
-  return { body }
-}
 
 const middleware = ({ http$ }) => ({
   http$: http$
-    .switchAssign(parse)
-})
-```
-
-or more simply (which also adds `query`)
-
-```javascript
-const parse = require('rxserver').parse
-
-const middleware = ({ http$ }) => ({
-  http$: http$
-    .switchAssign(parse)
+    .route(routes)
 })
 ```
 
 ## TODO (pull requests welcome)
 
-* [ ] serve static files
 * [ ] server side rendering
 * [ ] schema verification (optional)
 * [ ] authentication middleware
