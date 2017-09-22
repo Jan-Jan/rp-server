@@ -20,7 +20,8 @@
   "dependencies": {
     "body-parser": "^1.18.1",
     "query-string": "^5.0.0",
-    "rxjs": "^5.4.3"
+    "rxjs": "^5.4.3",
+    "send": "^0.15.4"
   },
   "devDependencies": {
     "pino-http": "^2.6.2"
