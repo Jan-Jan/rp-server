@@ -11,6 +11,9 @@ const logger = require('./logger')
 const helloWordRoute = require('./hello-world-route')
 const otherRoutes = require('./other-routes')
 
+require('rxjs/add/operator/switchMap')
+require('rxjs/add/operator/catch')
+
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
     .do(logger)
@@ -18,6 +21,7 @@ const middleware = ({ http$ /*, ws$ */ }) => ({
     .static(__dirname + '/public')
     .route(helloWordRoute)
     .route(otherRoutes)
+
 })
 
 const {
