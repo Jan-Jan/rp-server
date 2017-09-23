@@ -15,9 +15,9 @@ const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
     .do(logger)
     .catchMap(parse)
-    .static(__dirname + '/public')
+    .static(__dirname + '/public') // BETA
     .route(helloWordRoute)
-    .route(otherRoutes)
+    .route(otherRoutes),
 })
 
 const {
