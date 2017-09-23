@@ -76,7 +76,17 @@ The `switchCatch`, `route` and `static` operators are unique to rxserver.
 ### Operator: switchCatch
 
 `catchMap` is the standard `switchMap(predicate)` changed to `switchMap(tryCatch(predicate))`.
-Where the `tryCatch` wraps your predicate function in a try/catch block, because streams do not handle thrown errors at all. I.e., `.catchMap(parse)` is exactly the same as `switchMap(tryCatch(parse))`.
+Where the `tryCatch` wraps your predicate function in a try/catch block, because Subject streams do not handle thrown errors well. I.e., `.catchMap(parse)` is equivalent to
+
+```javascript
+switchMap(predicate => data => {
+  try {
+    return async predicate(data)
+  } catch (e) {
+    return ({ op: { error: e.message } })
+  }
+})
+```
 
 ### Operator: route
 
@@ -154,3 +164,4 @@ const middleware = ({ http$ }) => ({
 * [ ] websocket support
 * [ ] typescript && tsickle in example
 * [ ] business rules example
+* [ ] move to lerna, and split into multiple packages
