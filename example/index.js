@@ -15,7 +15,7 @@ const port = 1337
 
 const server = http.createServer(httpServerCallback)
 const io = new Socket(server)
-io.on('connection', wsServerCallback)
+io.on('connection', wsServerCallback(io))
 
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)

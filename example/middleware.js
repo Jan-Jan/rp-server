@@ -10,6 +10,10 @@ module.exports = ({ http$, command$, request$  }) => ({
     .static(__dirname + '/public') // very BETA
     .route(helloWordRoute)
     .route(otherRoutes),
-  command$: command$,
+  command$: command$
+    .do(({ data }) => console.log('command$: data =', data))
+    //.catchMap(auth)
+    //.route(commandRoutes)
+    ,
   request$: request$,
 })
