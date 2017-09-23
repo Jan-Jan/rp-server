@@ -11,17 +11,13 @@ const logger = require('./logger')
 const helloWordRoute = require('./hello-world-route')
 const otherRoutes = require('./other-routes')
 
-require('rxjs/add/operator/switchMap')
-require('rxjs/add/operator/catch')
-
 const middleware = ({ http$ /*, ws$ */ }) => ({
   http$: http$
     .do(logger)
     .catchMap(parse)
-    .static(__dirname + '/public')
+    .static(__dirname + '/public') // BETA
     .route(helloWordRoute)
-    .route(otherRoutes)
-
+    .route(otherRoutes),
 })
 
 const {
