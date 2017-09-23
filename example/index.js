@@ -1,34 +1,22 @@
 'use strict'
 
 const http = require('http')
-const rxserver = require('../lib')
-const {
-  createServerCallbacks,
-  parse,
-} = rxserver
-
-const logger = require('./logger')
-const helloWordRoute = require('./hello-world-route')
-const otherRoutes = require('./other-routes')
-
-const middleware = ({ http$ /*, ws$ */ }) => ({
-  http$: http$
-    .do(logger)
-    .catchMap(parse)
-    .static(__dirname + '/public') // BETA
-    .route(helloWordRoute)
-    .route(otherRoutes),
-})
+const Socket = require('socket.io')
+const { createServerCallbacks } = require('../lib')
+const middleware = require('./middleware')
 
 const {
   httpServerCallback,
-  // wsServerCallback,
+  wsServerCallback,
 } = createServerCallbacks(middleware)
 
 const hostname = '127.0.0.1'
 const port = 1337
 
-http.createServer(httpServerCallback)
-  .listen(port, hostname, () => {
+const server = http.createServer(httpServerCallback)
+const io = new Socket(server)
+io.on('connection', wsServerCallback)
+
+server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
   })
