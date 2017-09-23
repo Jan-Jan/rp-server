@@ -3,7 +3,7 @@ const logger = require('./logger')
 const helloWordRoute = require('./hello-world-route')
 const otherRoutes = require('./other-routes')
 
-module.exports = ({ http$, command$, request$  }) => ({
+module.exports = (db, queue) => ({ http$, command$, request$  }) => ({
   http$: http$
     .do(logger)
     .catchMap(parse)

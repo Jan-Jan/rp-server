@@ -5,10 +5,13 @@ const Socket = require('socket.io')
 const { createServerCallbacks } = require('../lib')
 const middleware = require('./middleware')
 
+const db = {}
+const queue = {}
+
 const {
   httpServerCallback,
   wsServerCallback,
-} = createServerCallbacks(middleware)
+} = createServerCallbacks(middleware(db, queue))
 
 const hostname = '127.0.0.1'
 const port = 1337
