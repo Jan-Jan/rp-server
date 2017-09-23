@@ -1,6 +1,6 @@
 {
   "name": "rxserver",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A node server using rxjs",
   "main": "index.js",
   "scripts": {
